@@ -40,7 +40,17 @@ struct Store {
         return common.object(forKey: "always_top") as? Bool ?? true
     }
     
-    static func saveAlwaysTop(value: Bool) {
-        common.set(value, forKey: "always_top")
+    static var alwaysTop: Bool {
+        get {
+            return common.object(forKey: "always_top") as? Bool ?? true
+        }
+        set {
+            common.set(newValue, forKey: "always_top")
+            NotificationCenter.default.post(name: .alwaysTopNotificationId, object: nil)
+        }
     }
+}
+
+extension Notification.Name {
+    static let alwaysTopNotificationId = Notification.Name("AlwaysTopNotificationId")
 }

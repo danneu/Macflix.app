@@ -15,7 +15,6 @@ extension ViewController: WKNavigationDelegate {
 
 class ViewController: NSViewController, WKUIDelegate {
     var webView: WKWebView!
-    var addedObserver = false
     // Netflix default is 14px
     var subSize = 14
     var subsVisible = true
@@ -61,18 +60,6 @@ class ViewController: NSViewController, WKUIDelegate {
         let initUrl = URL(string: "https://www.netflix.com" + Store.getUrl())
         let myRequest = URLRequest(url: initUrl!)
         webView.load(myRequest)
-        
-        if let window = self.view.window {
-            window.level = .floating
-        } else {
-            self.addObserver(self, forKeyPath: "view.window", options: [.new, .initial], context: nil)
-        }
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let window = self.view.window {
-            window.level = .floating
-        }
     }
     
     @objc func bumpBackward() {

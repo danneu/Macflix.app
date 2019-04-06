@@ -3,14 +3,25 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     var mediaKeyTap: MediaKeyTap?
+    @IBOutlet weak var alwaysTopItem: NSMenuItem!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         mediaKeyTap = MediaKeyTap(delegate: self)
         mediaKeyTap?.start()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateAlwaysTopItem), name: .alwaysTopNotificationId, object: nil)
+        updateAlwaysTopItem()
     }
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
+    }
+    
+    @objc func updateAlwaysTopItem() {
+        alwaysTopItem.state = Store.alwaysTop ? .on : .off
+    }
+    
+    @IBAction func toggleAlwaysTop(_ sender: Any) {
+        Store.alwaysTop = !Store.alwaysTop
     }
     
     @IBAction func toggleVideoPlayback(_ sender: Any) {
@@ -32,7 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func toggleSubtitleVisibility(_ sender: Any) {
         NSApp.sendAction(#selector(ViewController.toggleSubtitleVisibility), to: nil, from: nil)
-
     }
     
     @IBAction func resetWindow(_ sender: Any) {

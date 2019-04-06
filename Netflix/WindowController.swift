@@ -13,6 +13,15 @@ class WindowController: NSWindowController, NSWindowDelegate {
             // also the fullscreen status. Since a window launching to
             // fullscreen is awful UX, we disable it and manually save the frame.
             window.isRestorable = false
+            
+            alwaysTopChanged()
+            NotificationCenter.default.addObserver(self, selector: #selector(alwaysTopChanged), name: .alwaysTopNotificationId, object: nil)
+        }
+    }
+    
+    @objc func alwaysTopChanged() {
+        if let window = window {
+            window.level = Store.alwaysTop ? .floating : .normal
         }
     }
     
