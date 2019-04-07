@@ -6,7 +6,16 @@ window.netflix = mountDriver()
 function mountDriver() {
     // Makes necessary changes to the DOM and then returns functions that depend on those mutations
     // to drive Netflix.
-    
+
+    // INTERCEPT CONSOLE.LOG
+
+    const oldLog = console.log
+    console.log = (...args) => {
+        const message = args.map((x) => String(x)).join(' ')
+        window.webkit.messageHandlers.onConsoleLog.postMessage(message)
+        oldLog.apply(console, args)
+    }
+
     // Walks entirety of an html node's downstream tree and
     // returns Set of <video> nodes it finds.
     //
@@ -29,10 +38,9 @@ function mountDriver() {
         }, found)
     }
 
-    // dims is { width, height } or null
-    function onPrimaryVideoFound(dims) {
-        console.log('onPrimaryVideoFound', dims)
-        window.webkit.messageHandlers.onVideoDimensions.postMessage(dims)
+    // This version takes an array of nodes
+    function crawlNodes(roots) {
+        return Array.from(roots).reduce((acc, node) => crawlNode(node, acc), new Set())
     }
 
     // mutation observer handler that walks all addedNodes + children looking
@@ -42,13 +50,20 @@ function mountDriver() {
     function videoFinder(muts) {
         // We only care about videos in /watch/
         if (!location.pathname.startsWith('/watch/')) {
+            // autopause all vids unless we are watching a show.
+            for (const mut of muts) {
+                for (const video of crawlNodes(mut.addedNodes)) {
+                    video.pause()
+                }
+            }
             return
         }
         window.muts = muts
         for (const mut of muts) {
-            const videos = Array.from(mut.addedNodes).reduce((acc, node) => crawlNode(node, acc), new Set())
+            const videos = crawlNodes(mut.addedNodes)
             for (const video of videos) {
                 if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+                    // FIXME: mem leak
                     video.addEventListener('loadedmetadata', (e) => {
                         const { videoWidth: width, videoHeight: height } = video
                         onPrimaryVideoFound({ width, height })
@@ -70,6 +85,12 @@ function mountDriver() {
 
     ////////////////////////////////////////////////////////////
 
+    // dims is { width, height } or null
+    function onPrimaryVideoFound(dims) {
+        console.log('onPrimaryVideoFound', dims)
+        window.webkit.messageHandlers.onVideoDimensions.postMessage(dims)
+    }
+
     function handleUrlChange(path) {
         const message = { url: path }
         window.webkit.messageHandlers.onPushState.postMessage(message)
@@ -77,15 +98,6 @@ function mountDriver() {
             // clear aspect ratio when we aren't in /watch
             onPrimaryVideoFound(null)
         }
-    }
-
-    // INTERCEPT CONSOLE.LOG
-
-    const oldLog = console.log
-    console.log = (...args) => {
-        const message = args.map((x) => String(x)).join(' ')
-        window.webkit.messageHandlers.onConsoleLog.postMessage(message)
-        oldLog.apply(console, args)
     }
 
     // STYLE MOUNT POINTS
