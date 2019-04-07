@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D94E0E4C225825D000FA3306"
-               BuildableName = "Netflix.app"
-               BlueprintName = "Netflix"
-               ReferencedContainer = "container:Netflix.xcodeproj">
+               BuildableName = "Macflix.app"
+               BlueprintName = "Macflix"
+               ReferencedContainer = "container:Macflix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D94E0E4C225825D000FA3306"
-            BuildableName = "Netflix.app"
-            BlueprintName = "Netflix"
-            ReferencedContainer = "container:Netflix.xcodeproj">
+            BuildableName = "Macflix.app"
+            BlueprintName = "Macflix"
+            ReferencedContainer = "container:Macflix.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D94E0E4C225825D000FA3306"
-            BuildableName = "Netflix.app"
-            BlueprintName = "Netflix"
-            ReferencedContainer = "container:Netflix.xcodeproj">
+            BuildableName = "Macflix.app"
+            BlueprintName = "Macflix"
+            ReferencedContainer = "container:Macflix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D94E0E4C225825D000FA3306"
-            BuildableName = "Netflix.app"
-            BlueprintName = "Netflix"
-            ReferencedContainer = "container:Netflix.xcodeproj">
+            BuildableName = "Macflix.app"
+            BlueprintName = "Macflix"
+            ReferencedContainer = "container:Macflix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -30,13 +30,13 @@
 		D941989C22589D0000027594 /* MediaKeyTap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaKeyTap.h; sourceTree = "<group>"; };
 		D941989D22589D1700027594 /* MediaApplicationWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApplicationWatcher.swift; sourceTree = "<group>"; };
 		D941989F22589D4A00027594 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		D94E0E4D225825D000FA3306 /* Netflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Netflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D94E0E4D225825D000FA3306 /* Macflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Macflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94E0E50225825D000FA3306 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D94E0E52225825D000FA3306 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D94E0E54225825D100FA3306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D94E0E57225825D100FA3306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D94E0E59225825D100FA3306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D94E0E5A225825D100FA3306 /* Netflix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Netflix.entitlements; sourceTree = "<group>"; };
+		D94E0E5A225825D100FA3306 /* Macflix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Macflix.entitlements; sourceTree = "<group>"; };
 		D9779FAA2258AF2200FBA466 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		D9779FB02258C0CD00FBA466 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		D9B0BE8C2258466D0004340C /* driver.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = driver.js; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		D94E0E44225825D000FA3306 = {
 			isa = PBXGroup;
 			children = (
-				D94E0E4F225825D000FA3306 /* Netflix */,
+				D94E0E4F225825D000FA3306 /* Macflix */,
 				D94E0E4E225825D000FA3306 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,12 +77,12 @@
 		D94E0E4E225825D000FA3306 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D94E0E4D225825D000FA3306 /* Netflix.app */,
+				D94E0E4D225825D000FA3306 /* Macflix.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D94E0E4F225825D000FA3306 /* Netflix */ = {
+		D94E0E4F225825D000FA3306 /* Macflix */ = {
 			isa = PBXGroup;
 			children = (
 				D94E0E56225825D100FA3306 /* Main.storyboard */,
@@ -94,18 +94,18 @@
 				D9B0BE8C2258466D0004340C /* driver.js */,
 				D94E0E59225825D100FA3306 /* Info.plist */,
 				D94E0E54225825D100FA3306 /* Assets.xcassets */,
-				D94E0E5A225825D100FA3306 /* Netflix.entitlements */,
+				D94E0E5A225825D100FA3306 /* Macflix.entitlements */,
 				D941989522589BE900027594 /* MediaKeyTap */,
 			);
-			path = Netflix;
+			path = Macflix;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D94E0E4C225825D000FA3306 /* Netflix */ = {
+		D94E0E4C225825D000FA3306 /* Macflix */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D94E0E5D225825D100FA3306 /* Build configuration list for PBXNativeTarget "Netflix" */;
+			buildConfigurationList = D94E0E5D225825D100FA3306 /* Build configuration list for PBXNativeTarget "Macflix" */;
 			buildPhases = (
 				D94E0E49225825D000FA3306 /* Sources */,
 				D94E0E4A225825D000FA3306 /* Frameworks */,
@@ -115,9 +115,9 @@
 			);
 			dependencies = (
 			);
-			name = Netflix;
+			name = Macflix;
 			productName = Netflix;
-			productReference = D94E0E4D225825D000FA3306 /* Netflix.app */;
+			productReference = D94E0E4D225825D000FA3306 /* Macflix.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -140,7 +140,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D94E0E48225825D000FA3306 /* Build configuration list for PBXProject "Netflix" */;
+			buildConfigurationList = D94E0E48225825D000FA3306 /* Build configuration list for PBXProject "Macflix" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -153,7 +153,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D94E0E4C225825D000FA3306 /* Netflix */,
+				D94E0E4C225825D000FA3306 /* Macflix */,
 			);
 		};
 /* End PBXProject section */
@@ -322,16 +322,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Netflix/Netflix.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Macflix/Macflix.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = K4G3798DHZ;
-				INFOPLIST_FILE = "$(SRCROOT)/Netflix/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Macflix/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.danneu.Netflix;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danneu.Macflix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -341,16 +341,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Netflix/Netflix.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Macflix/Macflix.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = K4G3798DHZ;
-				INFOPLIST_FILE = "$(SRCROOT)/Netflix/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Macflix/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.danneu.Netflix;
+				PRODUCT_BUNDLE_IDENTIFIER = com.danneu.Macflix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -359,7 +359,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D94E0E48225825D000FA3306 /* Build configuration list for PBXProject "Netflix" */ = {
+		D94E0E48225825D000FA3306 /* Build configuration list for PBXProject "Macflix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D94E0E5B225825D100FA3306 /* Debug */,
@@ -368,7 +368,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D94E0E5D225825D100FA3306 /* Build configuration list for PBXNativeTarget "Netflix" */ = {
+		D94E0E5D225825D100FA3306 /* Build configuration list for PBXNativeTarget "Macflix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D94E0E5E225825D100FA3306 /* Debug */,

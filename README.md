@@ -1,4 +1,4 @@
-# Netflix.app
+# Macflix.app
 
 A simple macOS webview wrapper around netflix.com to add conveniences for watching Netflix on desktop.
 

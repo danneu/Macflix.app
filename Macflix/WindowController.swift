@@ -9,6 +9,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         if let window = window {
             window.setFrame(Store.getWindowFrame(), display: true)
             window.minSize = Util.minWindowSize
+            window.isMovableByWindowBackground = true
             // window.restorable=true will not only remember frame, but
             // also the fullscreen status. Since a window launching to
             // fullscreen is awful UX, we disable it and manually save the frame.
