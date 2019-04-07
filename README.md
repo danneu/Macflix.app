@@ -10,6 +10,9 @@ A simple macOS webview wrapper around netflix.com to add conveniences for watchi
 -   Supports Macbook media keys. Pause, resume, back 10 seconds, forward 10 seconds.
 -   Adjust subtitle size.
 -   Hide/unhide subtitles.
+-   Adjusts to each show's aspect ratio.
+-   Drag anywhere to move the window.
+-   Adjust video playback speed.
 
 ## Why
 

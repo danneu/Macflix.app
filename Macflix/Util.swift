@@ -5,8 +5,8 @@ struct Util {
     static let defaultWindowFrame = NSRect(x: 100, y: 100, width: 480, height: 270)
     static let defaultPath = "/browse"
     
-    // Never enlarges the frame the achieve the aspect ratio.
-    // Centers the output.
+    // Never enlarges the frame to achieve the aspect ratio.
+    // Also centers the output frame.
     static func scaleFrameToAspectRatio(aspect: NSSize, frame: NSRect) -> NSRect {
         let targetRatio = aspect.width / aspect.height
         let origRatio = frame.width / frame.height
