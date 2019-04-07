@@ -69,6 +69,16 @@ class ViewController: NSViewController, WKUIDelegate {
     @objc func bumpForward() {
         self.webView.evaluateJavaScript("window.netflix.bumpForward()", completionHandler: jsCompletion)
     }
+    @objc func speedUp() {
+        self.webView.evaluateJavaScript("window.netflix.adjustPlaybackSpeed(0.25)", completionHandler: jsCompletion)
+    }
+    @objc func speedDown() {
+        self.webView.evaluateJavaScript("window.netflix.adjustPlaybackSpeed(-0.25)", completionHandler: jsCompletion)
+    }
+    @objc func reloadBrowser() {
+        self.webView.reloadFromOrigin()
+    }
+    
     
     func nextEpisode() {
         self.webView.evaluateJavaScript("window.netflix.nextEpisode()", completionHandler: jsCompletion)
@@ -89,9 +99,11 @@ class ViewController: NSViewController, WKUIDelegate {
     @objc func enlargeSubs() {
         self.adjustSubSize(delta: 2)
     }
+    
     @objc func shrinkSubs() {
         self.adjustSubSize(delta: -2)
     }
+    
     func adjustSubSize(delta: Int) {
         // in pixels
         let minSize = 14

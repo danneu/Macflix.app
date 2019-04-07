@@ -347,10 +347,25 @@
                                                 <action selector="shrinkSubs:" target="Voe-Tx-rLC" id="sco-5e-QBV"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Speed Up" keyEquivalent="]" id="6eN-3G-x28">
+                                            <connections>
+                                                <action selector="speedUp:" target="Voe-Tx-rLC" id="TXd-wY-a6x"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Speed Down" keyEquivalent="[" id="cl2-JM-svD">
+                                            <connections>
+                                                <action selector="speedDown:" target="Voe-Tx-rLC" id="FIt-Dz-tqY"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Reset Window" id="0Rd-0c-v0O">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetWindow:" target="Voe-Tx-rLC" id="BU9-4p-nfz"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reload Browser" keyEquivalent="r" id="aCS-A9-3UY">
+                                            <connections>
+                                                <action selector="reloadBrowser:" target="Voe-Tx-rLC" id="SDD-ch-jAA"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Show/Hide Subs" id="SIE-3H-iip">

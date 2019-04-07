@@ -40,6 +40,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.sendAction(#selector(ViewController.shrinkSubs), to: nil, from: nil)
 
     }
+    @IBAction func speedUp(_ sender: Any) {
+        NSApp.sendAction(#selector(ViewController.speedUp), to: nil, from: nil)
+
+    }
+    @IBAction func speedDown(_ sender: Any) {
+        NSApp.sendAction(#selector(ViewController.speedDown), to: nil, from: nil)
+
+    }
+    @IBAction func reloadBrowser(_ sender: Any) {
+        NSApp.sendAction(#selector(ViewController.reloadBrowser), to: nil, from: nil)
+
+    }
     
     @IBAction func toggleSubtitleVisibility(_ sender: Any) {
         NSApp.sendAction(#selector(ViewController.toggleSubtitleVisibility), to: nil, from: nil)
