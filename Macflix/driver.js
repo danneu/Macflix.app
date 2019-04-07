@@ -6,6 +6,78 @@ window.netflix = mountDriver()
 function mountDriver() {
     // Makes necessary changes to the DOM and then returns functions that depend on those mutations
     // to drive Netflix.
+    
+    // Walks entirety of an html node's downstream tree and
+    // returns Set of <video> nodes it finds.
+    //
+    // root is node | null
+    // found is Set of matching nodes
+    function crawlNode(root, found = new Set()) {
+        const predicate = (node) => node && node.tagName === 'VIDEO'
+        if (!root || !root.childNodes) {
+            return found
+        }
+        if (predicate(root)) {
+            found.add(root)
+        }
+        return Array.from(root.childNodes).reduce((acc, node) => {
+            if (predicate(node)) {
+                return crawlNode(node, new Set([...acc, node]))
+            } else {
+                return crawlNode(node, acc)
+            }
+        }, found)
+    }
+
+    // dims is { width, height } or null
+    function onPrimaryVideoFound(dims) {
+        console.log('onPrimaryVideoFound', dims)
+        window.webkit.messageHandlers.onVideoDimensions.postMessage(dims)
+    }
+
+    // mutation observer handler that walks all addedNodes + children looking
+    // for added <video>s.
+    //
+    // FIXME: adds listeners to <video>s but never removes them.
+    function videoFinder(muts) {
+        // We only care about videos in /watch/
+        if (!location.pathname.startsWith('/watch/')) {
+            return
+        }
+        window.muts = muts
+        for (const mut of muts) {
+            const videos = Array.from(mut.addedNodes).reduce((acc, node) => crawlNode(node, acc), new Set())
+            for (const video of videos) {
+                if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+                    video.addEventListener('loadedmetadata', (e) => {
+                        const { videoWidth: width, videoHeight: height } = video
+                        onPrimaryVideoFound({ width, height })
+                    })
+                } else {
+                    const { videoWidth: width, videoHeight: height } = video
+                    onPrimaryVideoFound({ width, height })
+                }
+            }
+        }
+    }
+    const observer = new MutationObserver(videoFinder)
+    observer.observe(document.body, {
+        attributes: false,
+        childList: true,
+        characterData: false,
+        subtree: true,
+    })
+
+    ////////////////////////////////////////////////////////////
+
+    function handleUrlChange(path) {
+        const message = { url: path }
+        window.webkit.messageHandlers.onPushState.postMessage(message)
+        if (!path.startsWith('/watch/')) {
+            // clear aspect ratio when we aren't in /watch
+            onPrimaryVideoFound(null)
+        }
+    }
 
     // INTERCEPT CONSOLE.LOG
 
@@ -34,7 +106,7 @@ function mountDriver() {
             if (e.target.classList.contains('button-nfplayerFullscreen')) {
                 e.preventDefault()
                 e.stopPropagation()
-                window.webkit.messageHandlers.requestFullscreen.postMessage()
+                window.webkit.messageHandlers.requestFullscreen.postMessage(null)
             }
         },
         true
@@ -42,9 +114,15 @@ function mountDriver() {
 
     // DETECT URL CHANGE
 
+    // TODO: clean up. i got superstitious and added a redundant handler.
     history.onpopstate = () => {
         const message = { url: location.pathname }
-        window.webkit.messageHandlers.onPushState.postMessage(message)
+        handleUrlChange(location.pathname)
+    }
+
+    window.onpopstate = () => {
+        const message = { url: location.pathname }
+        handleUrlChange(location.pathname)
     }
 
     const pushState = history.pushState
@@ -53,10 +131,7 @@ function mountDriver() {
         if (typeof history.onpushstate === 'function') {
             history.onpushstate(...args)
         }
-        const message = {
-            url,
-        }
-        window.webkit.messageHandlers.onPushState.postMessage(message)
+        handleUrlChange(url)
         return pushState.apply(history, args)
     }
 

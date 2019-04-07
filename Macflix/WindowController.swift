@@ -33,7 +33,19 @@ class WindowController: NSWindowController, NSWindowDelegate {
             window.level = Store.alwaysTop ? .floating : .normal
         }
     }
-
+    
+    func setAspectRatio(_ ratio: NSSize?) {
+        guard let window = window else { return }
+        if let ratio = ratio {
+            window.aspectRatio = ratio
+            let newFrame = Util.scaleFrameToAspectRatio(aspect: ratio, frame: window.frame)
+            window.setFrame(newFrame, display: true, animate: true)
+        } else {
+            // On non-/watch pages, user can resize to whatever dims they want.
+            window.resizeIncrements = NSSize(width: 1.0, height: 1.0)
+        }
+    }
+    
     // When user manually resizes window, store the frame for next launch.
     func windowDidEndLiveResize(_ notification: Notification) {
         guard let windowFrame = window?.frame,

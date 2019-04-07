@@ -37,8 +37,11 @@ class DraggableWebView: WKWebView {
     override func mouseUp(with event: NSEvent) {
         if let dragStart = dragStart {
             let milliseconds = (Date().timeIntervalSince1970 - dragStart.timeIntervalSince1970) * 1000
-            //print("delta", delta)
-            if milliseconds > 50 {
+            // If this delta threshold is too inaccurate, it creates
+            // awful UX of failed clicks. Might consider
+            // rightClick+drag for moving the window instead, as well.
+            print("delta milliseconds", milliseconds)
+            if milliseconds > 100 {
                 self.dragStart = nil
                 return
             }
@@ -53,6 +56,14 @@ class ViewController: NSViewController, WKUIDelegate {
     // Netflix default is 14px
     var subSize = 14
     var subsVisible = true
+    var currVideoDimensions: NSSize? = nil {
+        willSet(newDims) {}
+        didSet {
+            if let ctrl = NSApplication.shared.mainWindow?.windowController as? WindowController {
+                ctrl.setAspectRatio(self.currVideoDimensions)
+            }
+        }
+    }
 
     func onUrlChange(path: String) {
         print("onUrlChange path=\"\(path)\"")
@@ -77,6 +88,9 @@ class ViewController: NSViewController, WKUIDelegate {
         config.userContentController.add(self, name: "onPushState")
         config.userContentController.add(self, name: "onConsoleLog")
         config.userContentController.add(self, name: "requestFullscreen")
+        // body is null or { width: Int, height: Int }
+        config.userContentController.add(self, name: "onVideoDimensions")
+
 
         //webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView = DraggableWebView(frame: view.frame, configuration: config)
@@ -173,7 +187,8 @@ func jsCompletion(obj: Any?, err: Error?) {
 
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        print("got message from javascript: message.name=\"\(message.name)\"")
+        //print("got message from javascript: message.name=\"\(message.name)\" message.body=\(message.body)")
+        // should be on url change sine more ways than pushstate
         if message.name == "onPushState", let dictionary = message.body as? [String: Any] {
             let path = (dictionary["url"] as? String) ?? "--"
             self.onUrlChange(path: path)
@@ -181,6 +196,16 @@ extension ViewController: WKScriptMessageHandler {
             print("onConsoleLog \"\(text)\"")
         } else if message.name == "requestFullscreen" {
             self.view.window?.toggleFullScreen(nil)
+        } else if message.name == "onVideoDimensions"  {
+            let dict = message.body as? [String: Int] ?? nil
+            var dims: NSSize? = nil
+            if let width = dict?["width"], let height = dict?["height"] {
+                dims = NSSize(width: width, height: height)
+            }
+            if currVideoDimensions != dims {
+                print("-- VIDEO DIMS UPDATED", dims as Any)
+                currVideoDimensions = dims
+            }
         } else {
             print("unhandled js message: \(message.name) \(message.body)")
         }
