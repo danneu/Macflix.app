@@ -13,8 +13,43 @@ extension ViewController: WKNavigationDelegate {
     }
 }
 
+
+// A view that you can drag to move the underlying window around,
+// but other mouse events are handled by the view.
+class DraggableWebView: WKWebView {
+    var dragStart: Date? = nil
+    
+    // This alone would be sufficient except that the final mouseUp
+    // after a drag gets handled by the view instead of ignored,
+    // so the user will accidentally click a button if they happened
+    // to start (thus end) their drag on one.
+    override var mouseDownCanMoveWindow: Bool { return true }
+    
+    // Timestamp the start of any drag.
+    override func mouseDragged(with event: NSEvent) {
+        if dragStart == nil {
+            dragStart = Date()
+        }
+    }
+    
+    // Figure out if the mouseUp terminated a drag or not.
+    // Also consider tiny drags be clicks.
+    override func mouseUp(with event: NSEvent) {
+        if let dragStart = dragStart {
+            let milliseconds = (Date().timeIntervalSince1970 - dragStart.timeIntervalSince1970) * 1000
+            //print("delta", delta)
+            if milliseconds > 50 {
+                self.dragStart = nil
+                return
+            }
+        }
+        
+        super.mouseUp(with: event)
+    }
+}
+
 class ViewController: NSViewController, WKUIDelegate {
-    var webView: WKWebView!
+    var webView: DraggableWebView! // WKWebView!
     // Netflix default is 14px
     var subSize = 14
     var subsVisible = true
@@ -44,7 +79,7 @@ class ViewController: NSViewController, WKUIDelegate {
         config.userContentController.add(self, name: "requestFullscreen")
 
         //webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView = WKWebView(frame: view.frame, configuration: config)
+        webView = DraggableWebView(frame: view.frame, configuration: config)
         webView.allowsBackForwardNavigationGestures = true
 
         webView.uiDelegate = self
@@ -149,11 +184,5 @@ extension ViewController: WKScriptMessageHandler {
         } else {
             print("unhandled js message: \(message.name) \(message.body)")
         }
-    }
-}
-
-class ViewControllerView: NSView {
-    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
-        return true
     }
 }

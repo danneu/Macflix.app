@@ -78,11 +78,3 @@ extension AppDelegate: MediaKeyTapDelegate {
         }
     }
 }
-
-extension NSResponder {
-    func printChain() {
-        let next = self.nextResponder
-        print(next ?? "no next responder, dead end")
-        next?.printChain()
-    }
-}
