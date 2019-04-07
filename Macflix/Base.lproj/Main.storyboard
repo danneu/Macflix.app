@@ -417,7 +417,7 @@
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="Macflix" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>

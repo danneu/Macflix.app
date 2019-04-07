@@ -10,6 +10,14 @@ class WindowController: NSWindowController, NSWindowDelegate {
             window.setFrame(Store.getWindowFrame(), display: true)
             window.minSize = Util.minWindowSize
             window.isMovableByWindowBackground = true
+            
+            // Removing unchecking the titlebar from storyboard ruins my
+            // hover/dragging system. So this hack lets me keep the titlebar
+            // but render nothing on it.
+            window.standardWindowButton(.closeButton)?.isHidden = true
+            window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+            window.standardWindowButton(.zoomButton)?.isHidden = true
+            
             // window.restorable=true will not only remember frame, but
             // also the fullscreen status. Since a window launching to
             // fullscreen is awful UX, we disable it and manually save the frame.
