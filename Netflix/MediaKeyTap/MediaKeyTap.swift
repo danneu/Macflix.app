@@ -40,7 +40,7 @@ public class MediaKeyTap {
     let mediaApplicationWatcher: MediaApplicationWatcher
     let internals: MediaKeyTapInternals
     let keyPressMode: KeyPressMode
-    
+
     var interceptMediaKeys: Bool {
         didSet {
             if interceptMediaKeys != oldValue {
@@ -48,7 +48,7 @@ public class MediaKeyTap {
             }
         }
     }
-    
+
     // MARK: - Setup
     public init(delegate: MediaKeyTapDelegate, on mode: KeyPressMode = .keyDown) {
         self.delegate = delegate
@@ -57,17 +57,17 @@ public class MediaKeyTap {
         self.internals = MediaKeyTapInternals()
         self.keyPressMode = mode
     }
-    
+
     /// Activate the currently running application
     open func activate() {
         mediaApplicationWatcher.activate()
     }
-    
+
     /// Start the key tap
     open func start() {
         mediaApplicationWatcher.delegate = self
         mediaApplicationWatcher.start()
-        
+
         internals.delegate = self
         do {
             try internals.startWatchingMediaKeys()
@@ -76,7 +76,7 @@ public class MediaKeyTap {
             print(error.description)
         } catch {}
     }
-    
+
     private func keycodeToMediaKey(_ keycode: Keycode) -> MediaKey? {
         switch keycode {
         case NX_KEYTYPE_PLAY: return .playPause
@@ -87,7 +87,7 @@ public class MediaKeyTap {
         default: return nil
         }
     }
-    
+
     private func shouldNotifyDelegate(ofEvent event: KeyEvent) -> Bool {
         switch keyPressMode {
         case .keyDown:
@@ -104,7 +104,7 @@ extension MediaKeyTap: MediaApplicationWatcherDelegate {
     func updateIsActiveMediaApp(_ active: Bool) {
         interceptMediaKeys = active
     }
-    
+
     // When a static whitelisted app starts, we need to restart the tap to ensure that
     // the dynamic whitelist is not overridden by the other app
     func whitelistedAppStarted() {
@@ -121,7 +121,7 @@ extension MediaKeyTap: MediaKeyTapInternalsDelegate {
     func updateInterceptMediaKeys(_ intercept: Bool) {
         interceptMediaKeys = intercept
     }
-    
+
     func handle(keyEvent: KeyEvent) {
         if let key = keycodeToMediaKey(keyEvent.keycode) {
             if shouldNotifyDelegate(ofEvent: keyEvent) {
@@ -129,7 +129,7 @@ extension MediaKeyTap: MediaKeyTapInternalsDelegate {
             }
         }
     }
-    
+
     func isInterceptingMediaKeys() -> Bool {
         return interceptMediaKeys
     }
