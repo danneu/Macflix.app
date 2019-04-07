@@ -32,6 +32,14 @@ class DraggableWebView: WKWebView {
         }
     }
     
+    override func mouseDown(with event: NSEvent) {
+        // TODO: Look into why this happens and what it means.
+        if dragStart != nil {
+            dragStart = nil
+        }
+        super.mouseDown(with: event)
+    }
+    
     // Figure out if the mouseUp terminated a drag or not.
     // Also consider tiny drags be clicks.
     override func mouseUp(with event: NSEvent) {
@@ -41,8 +49,8 @@ class DraggableWebView: WKWebView {
             // awful UX of failed clicks. Might consider
             // rightClick+drag for moving the window instead, as well.
             print("delta milliseconds", milliseconds)
-            if milliseconds > 100 {
-                self.dragStart = nil
+            self.dragStart = nil
+            if milliseconds > 200 {
                 return
             }
         }
@@ -94,7 +102,7 @@ class ViewController: NSViewController, WKUIDelegate {
 
         //webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView = DraggableWebView(frame: view.frame, configuration: config)
-        webView.allowsBackForwardNavigationGestures = true
+        //webView.allowsBackForwardNavigationGestures = true
 
         webView.uiDelegate = self
         webView.navigationDelegate = self

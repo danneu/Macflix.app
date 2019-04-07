@@ -48,29 +48,26 @@ function mountDriver() {
     //
     // FIXME: adds listeners to <video>s but never removes them.
     function videoFinder(muts) {
-        // We only care about videos in /watch/
-        if (!location.pathname.startsWith('/watch/')) {
-            // autopause all vids unless we are watching a show.
-            for (const mut of muts) {
-                for (const video of crawlNodes(mut.addedNodes)) {
-                    video.pause()
-                }
-            }
-            return
-        }
-        window.muts = muts
         for (const mut of muts) {
             const videos = crawlNodes(mut.addedNodes)
-            for (const video of videos) {
-                if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
-                    // FIXME: mem leak
-                    video.addEventListener('loadedmetadata', (e) => {
+            if (location.pathname.startsWith('/watch/')) {
+                // If we are watching a show, get the dimensions of the video when it loads.
+                for (const video of videos) {
+                    if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+                        // FIXME: mem leak
+                        video.addEventListener('loadedmetadata', (e) => {
+                            const { videoWidth: width, videoHeight: height } = video
+                            onPrimaryVideoFound({ width, height })
+                        })
+                    } else {
                         const { videoWidth: width, videoHeight: height } = video
                         onPrimaryVideoFound({ width, height })
-                    })
-                } else {
-                    const { videoWidth: width, videoHeight: height } = video
-                    onPrimaryVideoFound({ width, height })
+                    }
+                }
+            } else {
+                // We aren't watching a show, so autopause all videos as they spawn.
+                for (const video of videos) {
+                    video.pause()
                 }
             }
         }
