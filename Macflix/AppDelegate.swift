@@ -16,6 +16,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
+    @IBAction func fixPlaybackError(_ sender: Any) {
+        NSApp.sendAction(#selector(ViewController.fixPlaybackError), to: nil, from: nil)
+    }
+    
     @objc func updateAlwaysTopItem() {
         alwaysTopItem.state = Store.alwaysTop ? .on : .off
     }
@@ -29,7 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func clearData(_ sender: Any) {
-        NSApp.sendAction(#selector(ViewController.clearData), to: nil, from: nil)
+        NSApp.sendAction(#selector(ViewController.clearAllData), to: nil, from: nil)
     }
 
     @IBAction func enlargeSubs(_ sender: Any) {

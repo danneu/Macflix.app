@@ -13,7 +13,6 @@ extension ViewController: WKNavigationDelegate {
     }
 }
 
-
 // A view that you can drag to move the underlying window around,
 // but other mouse events are handled by the view.
 class DraggableWebView: WKWebView {
@@ -35,6 +34,7 @@ class DraggableWebView: WKWebView {
     override func mouseDown(with event: NSEvent) {
         // TODO: Look into why this happens and what it means.
         if dragStart != nil {
+            print("[weird] mouseDown happened while dragStart was set.")
             dragStart = nil
         }
         super.mouseDown(with: event)
@@ -136,7 +136,7 @@ class ViewController: NSViewController, WKUIDelegate {
     }
 
     @objc func reloadBrowser() {
-        self.webView.reloadFromOrigin()
+        self.webView.reload()
     }
 
     func nextEpisode() {
@@ -175,12 +175,24 @@ class ViewController: NSViewController, WKUIDelegate {
         subsVisible = !subsVisible
         self.webView.evaluateJavaScript("window.netflix.toggleSubtitleVisibility(\(subsVisible))", completionHandler: jsCompletion)
     }
+    
+    // When /watch/ gives me an error page,
+    // deleting localStorage and indexDb seems
+    // to solve it.
+    @objc func fixPlaybackError() {
+        let types = Set([
+            WKWebsiteDataTypeIndexedDBDatabases,
+            WKWebsiteDataTypeLocalStorage
+        ])
+        WKWebsiteDataStore.default().removeData(ofTypes: types, modifiedSince: Date(timeIntervalSince1970: 0), completionHandler: {
+//            self.webView.reload()
+            self.webView.reloadFromOrigin()
+        })
+    }
 
-    @objc func clearData() {
-        let store = WKWebsiteDataStore.default()
+    @objc func clearAllData() {
         let types = WKWebsiteDataStore.allWebsiteDataTypes()
-        let epoch = Date(timeIntervalSince1970: 0)
-        store.removeData(ofTypes: types, modifiedSince: epoch, completionHandler: {
+        WKWebsiteDataStore.default().removeData(ofTypes: types, modifiedSince: Date(timeIntervalSince1970: 0), completionHandler: {
             self.webView.reload()
         })
     }
@@ -195,7 +207,7 @@ func jsCompletion(obj: Any?, err: Error?) {
 
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        //print("got message from javascript: message.name=\"\(message.name)\" message.body=\(message.body)")
+        print("got message from javascript: message.name=\"\(message.name)\" message.body=\(message.body)")
         // should be on url change sine more ways than pushstate
         if message.name == "onPushState", let dictionary = message.body as? [String: Any] {
             let path = (dictionary["url"] as? String) ?? "--"

@@ -374,6 +374,12 @@
                                                 <action selector="toggleSubtitleVisibility:" target="Voe-Tx-rLC" id="dgF-Jl-9na"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Fix Playback Error" id="z1Z-Tp-ozN">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="fixPlaybackError:" target="Voe-Tx-rLC" id="1k4-uf-PcE"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Clear Browser Data" id="I1J-Tk-tYe">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
