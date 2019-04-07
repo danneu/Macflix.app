@@ -16,6 +16,22 @@ function mountDriver() {
         oldLog.apply(console, args)
     }
 
+    // REMOVE STICKY HEADER
+
+    // Nuke the fixed header since we're likely using a small viewport.
+    const stickyHeaderObserver = new MutationObserver((muts) => {
+        for (const mut of muts) {
+            const header = mut.target
+            if (header.style.position === 'fixed') {
+                header.style.position = 'relative'
+            }
+        }
+    })
+    stickyHeaderObserver.observe(qs('.pinning-header-container'), {
+        attributeFilter: ['style'],
+        attributes: true,
+    })
+
     // Walks entirety of an html node's downstream tree and
     // returns Set of <video> nodes it finds.
     //
