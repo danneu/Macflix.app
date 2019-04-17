@@ -105,8 +105,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var hideOnHoverMenuItem: NSMenuItem!
     @IBAction func toggleHideOnHover(_ sender: Any) {
     }
+    
     func onUrlChange(path: String) {
         print("onUrlChange path=\"\(path)\"")
+        // Clear aspect ratio lock when not watching a show
+        if !path.hasPrefix("/watch/") {
+            windowController.setAspectRatio(nil)
+        }
         Store.saveUrl(path)
     }
 }
