@@ -1,37 +1,56 @@
 import Cocoa
-import Foundation
+import WebKit
 
-class WindowController: NSWindowController, NSWindowDelegate {
+enum Avoidance {
+    case ghost
+    //case teleport
+}
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
+//protocol AvoidanceDelegate: class {
+//    var avoidance: Avoidance? { get set }
+//    func mouseEnteredGlobally()
+//    func mouseExitedGlobally()
+//}
 
-        if let window = window {
-            window.setFrame(Store.getWindowFrame(), display: true)
-            window.minSize = Util.minWindowSize
-            window.isMovableByWindowBackground = true
-            
-            // Removing unchecking the titlebar from storyboard ruins my
-            // hover/dragging system. So this hack lets me keep the titlebar
-            // but render nothing on it.
-            window.standardWindowButton(.closeButton)?.isHidden = true
-            window.standardWindowButton(.miniaturizeButton)?.isHidden = true
-            window.standardWindowButton(.zoomButton)?.isHidden = true
-            
-            // window.restorable=true will not only remember frame, but
-            // also the fullscreen status. Since a window launching to
-            // fullscreen is awful UX, we disable it and manually save the frame.
-            window.isRestorable = false
+protocol Avoider {
+    func phaseOut()
+    func phaseIn()
+}
 
-            alwaysTopChanged()
-            NotificationCenter.default.addObserver(self, selector: #selector(alwaysTopChanged), name: .alwaysTopNotificationId, object: nil)
+class WindowController: NSWindowController, NSWindowDelegate, Avoider {
+//    var avoidanceDelegate: AvoidanceDelegate?
+    var avoidance: Avoidance? = nil
+    override var window: NSWindow? {
+        didSet {
+            // Whenever window is set, sync its always-on-top property
+            // with the value in Store.
+            self.alwaysTopChanged()
         }
     }
-
-    @objc func alwaysTopChanged() {
-        if let window = window {
-            window.level = Store.alwaysTop ? .floating : .normal
-        }
+    
+    
+    @objc func phaseOut() {
+        if (avoidance != .ghost) { return }
+        print("phaseOut")
+        guard let window = window else { return }
+        window.isOpaque = false
+        window.backgroundColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.10)
+        window.hasShadow = false
+        window.ignoresMouseEvents = true
+        guard let webView = window.contentView?.subviews.first(where: { view in view is WKWebView }) else { return }
+        webView.isHidden = true
+    }
+    
+    @objc func phaseIn() {
+        if (avoidance != .ghost) { return }
+        print("phaseIn")
+        guard let window = window else { return }
+        window.isOpaque = true
+        window.backgroundColor = NSColor.windowBackgroundColor
+        window.hasShadow = true
+        window.ignoresMouseEvents = false
+        guard let webView = window.contentView?.subviews.first(where: { $0 is WKWebView }) else { return }
+        webView.isHidden = false
     }
     
     func setAspectRatio(_ ratio: NSSize?) {
@@ -46,37 +65,60 @@ class WindowController: NSWindowController, NSWindowDelegate {
         }
     }
     
+    func windowWillStartLiveResize(_ notification: Notification) {
+        print("starting live resize")
+    }
+    
+    
     // When user manually resizes window, store the frame for next launch.
     func windowDidEndLiveResize(_ notification: Notification) {
+        print("did end live resize")
         guard let windowFrame = window?.frame,
             let screenFrame =  window?.screen?.frame else {
                 return
         }
-
+        
         // save window dimensions if it's not fullscreen
         if windowFrame.width < screenFrame.width || windowFrame.height < screenFrame.height {
             Store.saveWindowFrame(windowFrame)
         }
     }
-
+    
     // When user moves window, store the frame for next launch.
     func windowDidMove(_ notification: Notification) {
         guard let windowFrame = window?.frame,
             let screenFrame =  window?.screen?.frame else {
                 return
         }
-
+        
         // only save if window is 100% in bounds
         if screenFrame.contains(windowFrame) {
             Store.saveWindowFrame(windowFrame)
         }
     }
-
-    @objc func resetWindow() {
-        let frame = Util.defaultWindowFrame
-        guard let window = window else { return }
-        window.setFrame(frame, display: true)
-        Store.saveWindowFrame(frame)
+    
+    @objc func alwaysTopChanged() {
+        print("updating ")
+        if let window = window {
+            window.level = Store.isAlwaysTop ? .floating : .normal
+        }
     }
+    
+}
 
+class CatchallView: NSView {
+    override func mouseExited(with event: NSEvent) {
+//        print("[CatchAll] mouseExited")
+        NSApp.sendAction(#selector(WindowController.phaseIn), to: nil, from: nil)
+    }
+    
+    override func updateTrackingAreas() {
+        for area in self.trackingAreas {
+            self.removeTrackingArea(area)
+        }
+        // let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .activeAlways]
+        let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .activeAlways]
+        let trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+        self.addTrackingArea(trackingArea)
+    }
 }

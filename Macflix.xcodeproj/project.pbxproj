@@ -7,43 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D9245182225920CE00C16C88 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9245181225920CE00C16C88 /* WindowController.swift */; };
-		D941989722589CB200027594 /* NSEventExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941989622589CB200027594 /* NSEventExtensions.swift */; };
-		D941989922589CCE00027594 /* MediaKeyTapInternals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941989822589CCE00027594 /* MediaKeyTapInternals.swift */; };
-		D941989B22589CE500027594 /* MediaKeyTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941989A22589CE500027594 /* MediaKeyTap.swift */; };
-		D941989E22589D1700027594 /* MediaApplicationWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941989D22589D1700027594 /* MediaApplicationWatcher.swift */; };
-		D94198A022589D4A00027594 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941989F22589D4A00027594 /* Extensions.swift */; };
-		D94E0E51225825D000FA3306 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94E0E50225825D000FA3306 /* AppDelegate.swift */; };
-		D94E0E53225825D000FA3306 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94E0E52225825D000FA3306 /* ViewController.swift */; };
-		D94E0E55225825D100FA3306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D94E0E54225825D100FA3306 /* Assets.xcassets */; };
-		D94E0E58225825D100FA3306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D94E0E56225825D100FA3306 /* Main.storyboard */; };
-		D9779FAB2258AF2200FBA466 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9779FAA2258AF2200FBA466 /* Store.swift */; };
-		D9779FB12258C0CD00FBA466 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9779FB02258C0CD00FBA466 /* Util.swift */; };
-		D9B0BE8D2258466D0004340C /* driver.js in Resources */ = {isa = PBXBuildFile; fileRef = D9B0BE8C2258466D0004340C /* driver.js */; };
+		D9DE8724225A79A40020A582 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE8723225A79A40020A582 /* AppDelegate.swift */; };
+		D9DE8726225A79A60020A582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9DE8725225A79A60020A582 /* Assets.xcassets */; };
+		D9DE8729225A79A60020A582 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9DE8727225A79A60020A582 /* MainMenu.xib */; };
+		D9DE8732225A95490020A582 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE8731225A95490020A582 /* WindowController.swift */; };
+		D9DE8736225A98EB0020A582 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE8735225A98EB0020A582 /* Store.swift */; };
+		D9DE8738225AA9990020A582 /* driver.js in Resources */ = {isa = PBXBuildFile; fileRef = D9DE8737225AA9990020A582 /* driver.js */; };
+		D9DE873A225AAB160020A582 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE8739225AAB160020A582 /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D9245181225920CE00C16C88 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
-		D941989622589CB200027594 /* NSEventExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSEventExtensions.swift; sourceTree = "<group>"; };
-		D941989822589CCE00027594 /* MediaKeyTapInternals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeyTapInternals.swift; sourceTree = "<group>"; };
-		D941989A22589CE500027594 /* MediaKeyTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeyTap.swift; sourceTree = "<group>"; };
-		D941989C22589D0000027594 /* MediaKeyTap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaKeyTap.h; sourceTree = "<group>"; };
-		D941989D22589D1700027594 /* MediaApplicationWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApplicationWatcher.swift; sourceTree = "<group>"; };
-		D941989F22589D4A00027594 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		D94E0E4D225825D000FA3306 /* Macflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Macflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D94E0E50225825D000FA3306 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D94E0E52225825D000FA3306 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D94E0E54225825D100FA3306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D94E0E57225825D100FA3306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D94E0E59225825D100FA3306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D94E0E5A225825D100FA3306 /* Macflix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Macflix.entitlements; sourceTree = "<group>"; };
-		D9779FAA2258AF2200FBA466 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		D9779FB02258C0CD00FBA466 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		D9B0BE8C2258466D0004340C /* driver.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = driver.js; sourceTree = "<group>"; };
+		D9DE8720225A79A40020A582 /* Macflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Macflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9DE8723225A79A40020A582 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D9DE8725225A79A60020A582 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D9DE8728225A79A60020A582 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D9DE872A225A79A60020A582 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9DE872B225A79A60020A582 /* Macflix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Macflix.entitlements; sourceTree = "<group>"; };
+		D9DE8731225A95490020A582 /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		D9DE8735225A98EB0020A582 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		D9DE8737225AA9990020A582 /* driver.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = driver.js; sourceTree = "<group>"; };
+		D9DE8739225AAB160020A582 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D94E0E4A225825D000FA3306 /* Frameworks */ = {
+		D9DE871D225A79A40020A582 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -53,49 +40,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D941989522589BE900027594 /* MediaKeyTap */ = {
+		D9DE8717225A79A40020A582 = {
 			isa = PBXGroup;
 			children = (
-				D941989622589CB200027594 /* NSEventExtensions.swift */,
-				D941989822589CCE00027594 /* MediaKeyTapInternals.swift */,
-				D941989A22589CE500027594 /* MediaKeyTap.swift */,
-				D941989C22589D0000027594 /* MediaKeyTap.h */,
-				D941989D22589D1700027594 /* MediaApplicationWatcher.swift */,
-				D941989F22589D4A00027594 /* Extensions.swift */,
-			);
-			path = MediaKeyTap;
-			sourceTree = "<group>";
-		};
-		D94E0E44225825D000FA3306 = {
-			isa = PBXGroup;
-			children = (
-				D94E0E4F225825D000FA3306 /* Macflix */,
-				D94E0E4E225825D000FA3306 /* Products */,
+				D9DE8722225A79A40020A582 /* Macflix */,
+				D9DE8721225A79A40020A582 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D94E0E4E225825D000FA3306 /* Products */ = {
+		D9DE8721225A79A40020A582 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D94E0E4D225825D000FA3306 /* Macflix.app */,
+				D9DE8720225A79A40020A582 /* Macflix.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D94E0E4F225825D000FA3306 /* Macflix */ = {
+		D9DE8722225A79A40020A582 /* Macflix */ = {
 			isa = PBXGroup;
 			children = (
-				D94E0E56225825D100FA3306 /* Main.storyboard */,
-				D94E0E50225825D000FA3306 /* AppDelegate.swift */,
-				D9245181225920CE00C16C88 /* WindowController.swift */,
-				D94E0E52225825D000FA3306 /* ViewController.swift */,
-				D9779FAA2258AF2200FBA466 /* Store.swift */,
-				D9779FB02258C0CD00FBA466 /* Util.swift */,
-				D9B0BE8C2258466D0004340C /* driver.js */,
-				D94E0E59225825D100FA3306 /* Info.plist */,
-				D94E0E54225825D100FA3306 /* Assets.xcassets */,
-				D94E0E5A225825D100FA3306 /* Macflix.entitlements */,
-				D941989522589BE900027594 /* MediaKeyTap */,
+				D9DE8723225A79A40020A582 /* AppDelegate.swift */,
+				D9DE8731225A95490020A582 /* WindowController.swift */,
+				D9DE8735225A98EB0020A582 /* Store.swift */,
+				D9DE8739225AAB160020A582 /* Util.swift */,
+				D9DE8737225AA9990020A582 /* driver.js */,
+				D9DE8727225A79A60020A582 /* MainMenu.xib */,
+				D9DE872A225A79A60020A582 /* Info.plist */,
+				D9DE872B225A79A60020A582 /* Macflix.entitlements */,
+				D9DE8725225A79A60020A582 /* Assets.xcassets */,
 			);
 			path = Macflix;
 			sourceTree = "<group>";
@@ -103,34 +75,34 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D94E0E4C225825D000FA3306 /* Macflix */ = {
+		D9DE871F225A79A40020A582 /* Macflix */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D94E0E5D225825D100FA3306 /* Build configuration list for PBXNativeTarget "Macflix" */;
+			buildConfigurationList = D9DE872E225A79A60020A582 /* Build configuration list for PBXNativeTarget "Macflix" */;
 			buildPhases = (
-				D94E0E49225825D000FA3306 /* Sources */,
-				D94E0E4A225825D000FA3306 /* Frameworks */,
-				D94E0E4B225825D000FA3306 /* Resources */,
+				D9DE871C225A79A40020A582 /* Sources */,
+				D9DE871D225A79A40020A582 /* Frameworks */,
+				D9DE871E225A79A40020A582 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Macflix;
-			productName = Netflix;
-			productReference = D94E0E4D225825D000FA3306 /* Macflix.app */;
+			productName = NoStory;
+			productReference = D9DE8720225A79A40020A582 /* Macflix.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D94E0E45225825D000FA3306 /* Project object */ = {
+		D9DE8718225A79A40020A582 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = danneu;
 				TargetAttributes = {
-					D94E0E4C225825D000FA3306 = {
+					D9DE871F225A79A40020A582 = {
 						CreatedOnToolsVersion = 10.2;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
@@ -140,7 +112,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D94E0E48225825D000FA3306 /* Build configuration list for PBXProject "Macflix" */;
+			buildConfigurationList = D9DE871B225A79A40020A582 /* Build configuration list for PBXProject "Macflix" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -148,62 +120,56 @@
 				en,
 				Base,
 			);
-			mainGroup = D94E0E44225825D000FA3306;
-			productRefGroup = D94E0E4E225825D000FA3306 /* Products */;
+			mainGroup = D9DE8717225A79A40020A582;
+			productRefGroup = D9DE8721225A79A40020A582 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D94E0E4C225825D000FA3306 /* Macflix */,
+				D9DE871F225A79A40020A582 /* Macflix */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D94E0E4B225825D000FA3306 /* Resources */ = {
+		D9DE871E225A79A40020A582 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9B0BE8D2258466D0004340C /* driver.js in Resources */,
-				D94E0E55225825D100FA3306 /* Assets.xcassets in Resources */,
-				D94E0E58225825D100FA3306 /* Main.storyboard in Resources */,
+				D9DE8726225A79A60020A582 /* Assets.xcassets in Resources */,
+				D9DE8738225AA9990020A582 /* driver.js in Resources */,
+				D9DE8729225A79A60020A582 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D94E0E49225825D000FA3306 /* Sources */ = {
+		D9DE871C225A79A40020A582 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D941989722589CB200027594 /* NSEventExtensions.swift in Sources */,
-				D9245182225920CE00C16C88 /* WindowController.swift in Sources */,
-				D9779FB12258C0CD00FBA466 /* Util.swift in Sources */,
-				D94E0E53225825D000FA3306 /* ViewController.swift in Sources */,
-				D941989B22589CE500027594 /* MediaKeyTap.swift in Sources */,
-				D9779FAB2258AF2200FBA466 /* Store.swift in Sources */,
-				D94E0E51225825D000FA3306 /* AppDelegate.swift in Sources */,
-				D941989E22589D1700027594 /* MediaApplicationWatcher.swift in Sources */,
-				D941989922589CCE00027594 /* MediaKeyTapInternals.swift in Sources */,
-				D94198A022589D4A00027594 /* Extensions.swift in Sources */,
+				D9DE8724225A79A40020A582 /* AppDelegate.swift in Sources */,
+				D9DE873A225AAB160020A582 /* Util.swift in Sources */,
+				D9DE8732225A95490020A582 /* WindowController.swift in Sources */,
+				D9DE8736225A98EB0020A582 /* Store.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D94E0E56225825D100FA3306 /* Main.storyboard */ = {
+		D9DE8727225A79A60020A582 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D94E0E57225825D100FA3306 /* Base */,
+				D9DE8728225A79A60020A582 /* Base */,
 			);
-			name = Main.storyboard;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		D94E0E5B225825D100FA3306 /* Debug */ = {
+		D9DE872C225A79A60020A582 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -264,7 +230,7 @@
 			};
 			name = Debug;
 		};
-		D94E0E5C225825D100FA3306 /* Release */ = {
+		D9DE872D225A79A60020A582 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -318,7 +284,7 @@
 			};
 			name = Release;
 		};
-		D94E0E5E225825D100FA3306 /* Debug */ = {
+		D9DE872F225A79A60020A582 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -326,7 +292,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = K4G3798DHZ;
-				INFOPLIST_FILE = "$(SRCROOT)/Macflix/Info.plist";
+				INFOPLIST_FILE = Macflix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -337,7 +303,7 @@
 			};
 			name = Debug;
 		};
-		D94E0E5F225825D100FA3306 /* Release */ = {
+		D9DE8730225A79A60020A582 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -345,7 +311,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = K4G3798DHZ;
-				INFOPLIST_FILE = "$(SRCROOT)/Macflix/Info.plist";
+				INFOPLIST_FILE = Macflix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -359,25 +325,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D94E0E48225825D000FA3306 /* Build configuration list for PBXProject "Macflix" */ = {
+		D9DE871B225A79A40020A582 /* Build configuration list for PBXProject "Macflix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D94E0E5B225825D100FA3306 /* Debug */,
-				D94E0E5C225825D100FA3306 /* Release */,
+				D9DE872C225A79A60020A582 /* Debug */,
+				D9DE872D225A79A60020A582 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D94E0E5D225825D100FA3306 /* Build configuration list for PBXNativeTarget "Macflix" */ = {
+		D9DE872E225A79A60020A582 /* Build configuration list for PBXNativeTarget "Macflix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D94E0E5E225825D100FA3306 /* Debug */,
-				D94E0E5F225825D100FA3306 /* Release */,
+				D9DE872F225A79A60020A582 /* Debug */,
+				D9DE8730225A79A60020A582 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D94E0E45225825D000FA3306 /* Project object */;
+	rootObject = D9DE8718225A79A40020A582 /* Project object */;
 }

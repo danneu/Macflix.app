@@ -1,11 +1,5 @@
-const qs = (...args) => document.querySelector(...args)
-const qsa = (...args) => document.querySelectorAll(...args)
-
-window.netflix = mountDriver()
-
-function mountDriver() {
-    // Makes necessary changes to the DOM and then returns functions that depend on those mutations
-    // to drive Netflix.
+;(function() {
+    'use strict'
 
     // INTERCEPT CONSOLE.LOG
 
@@ -16,200 +10,227 @@ function mountDriver() {
         oldLog.apply(console, args)
     }
 
-    // REMOVE STICKY HEADER
+    window.macflix = mountDriver()
 
-    // Nuke the fixed header since we're likely using a small viewport.
-    const stickyHeaderObserver = new MutationObserver((muts) => {
-        for (const mut of muts) {
-            const header = mut.target
-            if (header.style.position === 'fixed') {
-                header.style.position = 'relative'
-            }
+    function mountDriver() {
+        if (window.macflix) {
+            console.log('already mounted')
+            return window.macflix
+        } else {
+            console.log('mounting...')
         }
-    })
-    stickyHeaderObserver.observe(qs('.pinning-header-container'), {
-        attributeFilter: ['style'],
-        attributes: true,
-    })
 
-    // Walks entirety of an html node's downstream tree and
-    // returns Set of <video> nodes it finds.
-    //
-    // root is node | null
-    // found is Set of matching nodes
-    function crawlNode(root, found = new Set()) {
-        const predicate = (node) => node && node.tagName === 'VIDEO'
-        if (!root || !root.childNodes) {
-            return found
-        }
-        if (predicate(root)) {
-            found.add(root)
-        }
-        return Array.from(root.childNodes).reduce((acc, node) => {
-            if (predicate(node)) {
-                return crawlNode(node, new Set([...acc, node]))
-            } else {
-                return crawlNode(node, acc)
-            }
-        }, found)
-    }
+        // Makes necessary changes to the DOM and then returns functions that depend on those mutations
+        // to drive Netflix.
 
-    // This version takes an array of nodes
-    function crawlNodes(roots) {
-        return Array.from(roots).reduce((acc, node) => crawlNode(node, acc), new Set())
-    }
+        const qs = (...args) => document.querySelector(...args)
+        const qsa = (...args) => document.querySelectorAll(...args)
 
-    // mutation observer handler that walks all addedNodes + children looking
-    // for added <video>s.
-    //
-    // FIXME: adds listeners to <video>s but never removes them.
-    function videoFinder(muts) {
-        for (const mut of muts) {
-            const videos = crawlNodes(mut.addedNodes)
-            if (location.pathname.startsWith('/watch/')) {
-                // If we are watching a show, get the dimensions of the video when it loads.
-                for (const video of videos) {
-                    if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
-                        // FIXME: mem leak
-                        video.addEventListener('loadedmetadata', (e) => {
-                            const { videoWidth: width, videoHeight: height } = video
-                            onPrimaryVideoFound({ width, height })
-                        })
-                    } else {
-                        const { videoWidth: width, videoHeight: height } = video
-                        onPrimaryVideoFound({ width, height })
+        // REMOVE STICKY HEADER
+
+        // Nuke the fixed header since we're likely using a small viewport.
+        const homepageHeaderNode = qs('.pinning-header-container')
+        if (homepageHeaderNode) {
+            const stickyHeaderObserver = new MutationObserver((muts) => {
+                for (const mut of muts) {
+                    const header = mut.target
+                    header.style.backgroundColor = 'transparent'
+                    if (header.style.position === 'fixed') {
+                        header.style.position = 'relative'
                     }
                 }
-            } else {
-                // We aren't watching a show, so autopause all videos as they spawn.
-                for (const video of videos) {
-                    video.pause()
+            })
+            stickyHeaderObserver.observe(homepageHeaderNode, {
+                attributeFilter: ['style'],
+                attributes: true,
+            })
+        }
+
+        // Walks entirety of an html node's downstream tree and
+        // returns Set of <video> nodes it finds.
+        //
+        // root is node | null
+        // found is Set of matching nodes
+        function crawlNode(root, found = new Set()) {
+            const predicate = (node) => node && node.tagName === 'VIDEO'
+            if (!root || !root.childNodes) {
+                return found
+            }
+            if (predicate(root)) {
+                found.add(root)
+            }
+            return Array.from(root.childNodes).reduce((acc, node) => {
+                if (predicate(node)) {
+                    return crawlNode(node, new Set([...acc, node]))
+                } else {
+                    return crawlNode(node, acc)
+                }
+            }, found)
+        }
+
+        // This version takes an array of nodes
+        function crawlNodes(roots) {
+            return Array.from(roots).reduce((acc, node) => crawlNode(node, acc), new Set())
+        }
+
+        // mutation observer handler that walks all addedNodes + children looking
+        // for added <video>s.
+        //
+        // FIXME: adds listeners to <video>s but never removes them.
+        function videoFinder(muts) {
+            for (const mut of muts) {
+                const videos = crawlNodes(mut.addedNodes)
+                if (location.pathname.startsWith('/watch/')) {
+                    // If we are watching a show, get the dimensions of the video when it loads.
+                    for (const video of videos) {
+                        if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+                            // FIXME: mem leak
+                            video.addEventListener(
+                                'loadedmetadata',
+                                (e) => {
+                                    const { videoWidth: width, videoHeight: height } = video
+                                    onPrimaryVideoFound({ width, height })
+                                },
+                                { once: true }
+                            )
+                        } else {
+                            const { videoWidth: width, videoHeight: height } = video
+                            onPrimaryVideoFound({ width, height })
+                        }
+                    }
+                } else {
+                    // We aren't watching a show, so autopause all videos as they spawn.
+                    for (const video of videos) {
+                        if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+                            video.src = ''
+                        } else {
+                            // Should just nuke src here too, it seems to work so well.
+                            video.pause()
+                        }
+                    }
                 }
             }
         }
-    }
-    const observer = new MutationObserver(videoFinder)
-    observer.observe(document.body, {
-        attributes: false,
-        childList: true,
-        characterData: false,
-        subtree: true,
-    })
+        const observer = new MutationObserver(videoFinder)
+        observer.observe(document.body, {
+            attributes: false,
+            childList: true,
+            characterData: false,
+            subtree: true,
+        })
 
-    ////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////
 
-    // dims is { width, height } or null
-    function onPrimaryVideoFound(dims) {
-        console.log('onPrimaryVideoFound', dims)
-        window.webkit.messageHandlers.onVideoDimensions.postMessage(dims)
-    }
-
-    function handleUrlChange(path) {
-        const message = { url: path }
-        window.webkit.messageHandlers.onPushState.postMessage(message)
-        if (!path.startsWith('/watch/')) {
-            // clear aspect ratio when we aren't in /watch
-            onPrimaryVideoFound(null)
+        // dims is { width, height } or null
+        function onPrimaryVideoFound(dims) {
+            console.log('onPrimaryVideoFound', dims)
+            window.webkit.messageHandlers.onVideoDimensions.postMessage(dims)
         }
-    }
 
-    // STYLE MOUNT POINTS
-    // TODO: Clean up
-
-    const style = document.createElement('style')
-    style.id = 'foo'
-    document.head.appendChild(style)
-
-    const style2 = document.createElement('style')
-    style2.id = 'foo2'
-    document.head.appendChild(style2)
-
-    // Handle fullscreen click
-    document.addEventListener(
-        'click',
-        (e) => {
-            if (e.target.classList.contains('button-nfplayerFullscreen')) {
-                e.preventDefault()
-                e.stopPropagation()
-                window.webkit.messageHandlers.requestFullscreen.postMessage(null)
+        function handleUrlChange(path) {
+            const message = { url: path }
+            window.webkit.messageHandlers.onPushState.postMessage(message)
+            if (path.startsWith('/watch/')) {
+                // declutter control bar
+                const reportButton = qs('.button-nfplayerReportAProblem')
+                if (reportButton) reportButton.style.display = 'none'
+            } else {
+                // clear aspect ratio when we aren't in /watch
+                onPrimaryVideoFound(null)
             }
-        },
-        true
-    )
-
-    // DETECT URL CHANGE
-
-    // TODO: clean up. i got superstitious and added a redundant handler.
-    history.onpopstate = () => {
-        const message = { url: location.pathname }
-        handleUrlChange(location.pathname)
-    }
-
-    window.onpopstate = () => {
-        const message = { url: location.pathname }
-        handleUrlChange(location.pathname)
-    }
-
-    const pushState = history.pushState
-    history.pushState = (...args) => {
-        const [state, title, url] = args
-        if (typeof history.onpushstate === 'function') {
-            history.onpushstate(...args)
         }
-        handleUrlChange(url)
-        return pushState.apply(history, args)
-    }
 
-    return {
-        adjustPlaybackSpeed(delta) {
-            if (!location.pathname.startsWith('/watch/')) return
-            const video = qs('video')
-            if (!video) return
-            video.playbackRate += delta
-        },
-        nextEpidode() {
-            const button = qs('.button-nfplayerNextEpisode')
-            if (button) button.click()
-        },
-        bumpForward() {
-            const button = qs('.button-nfplayerFastForward')
-            if (button) button.click()
-        },
-        bumpBackward() {
-            const button = qs('.button-nfplayerBackTen')
-            if (button) button.click()
-        },
-        playVideo() {
-            const button = qs('.button-nfplayerPlay')
-            if (button) button.click()
-        },
-        pauseVideo() {
-            const button = qs('.button-nfplayerPause')
-            if (button) button.click()
-        },
-        fullscreenVideo() {
-            const button = document.querySelector('.button-nfplayerFullscreen')
-            if (button) button.click()
-        },
-        toggleVideoPlayback() {
-            const button = qs('.button-nfplayerPlay') || qs('.button-nfplayerPause')
-            if (button) button.click()
-        },
-        toggleSubtitleVisibility(isVisible) {
-            const style = qs('#foo2')
-            style.innerHTML = `
-            .player-timedtext-text-container {
+        // STYLE MOUNT POINTS
+        // TODO: Clean up
+
+        const style = document.createElement('style')
+        style.id = 'foo'
+        document.head.appendChild(style)
+
+        const style2 = document.createElement('style')
+        style2.id = 'foo2'
+        document.head.appendChild(style2)
+
+        // Handle fullscreen click
+        document.addEventListener(
+            'click',
+            (e) => {
+                if (e.target.classList.contains('button-nfplayerFullscreen')) {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    window.webkit.messageHandlers.requestFullscreen.postMessage(null)
+                }
+            },
+            true
+        )
+
+        // DETECT URL CHANGE
+
+        // TODO: clean up. i got superstitious and added a redundant handler.
+        history.onpopstate = () => handleUrlChange(location.pathname)
+        window.onpopstate = () => handleUrlChange(location.pathname)
+
+        const pushState = history.pushState
+        history.pushState = (...args) => {
+            const [state, title, url] = args
+            if (typeof history.onpushstate === 'function') {
+                history.onpushstate(...args)
+            }
+            handleUrlChange(url)
+            return pushState.apply(history, args)
+        }
+
+        return {
+            adjustPlaybackSpeed(delta) {
+                if (!location.pathname.startsWith('/watch/')) return
+                const video = qs('video')
+                if (!video) return
+                video.playbackRate += delta
+            },
+            nextEpidode() {
+                const button = qs('.button-nfplayerNextEpisode')
+                if (button) button.click()
+            },
+            bumpForward() {
+                const button = qs('.button-nfplayerFastForward')
+                if (button) button.click()
+            },
+            bumpBackward() {
+                const button = qs('.button-nfplayerBackTen')
+                if (button) button.click()
+            },
+            playVideo() {
+                const button = qs('.button-nfplayerPlay')
+                if (button) button.click()
+            },
+            pauseVideo() {
+                const button = qs('.button-nfplayerPause')
+                if (button) button.click()
+            },
+            fullscreenVideo() {
+                const button = document.querySelector('.button-nfplayerFullscreen')
+                if (button) button.click()
+            },
+            toggleVideoPlayback() {
+                const button = qs('.button-nfplayerPlay') || qs('.button-nfplayerPause')
+                if (button) button.click()
+            },
+            toggleSubtitleVisibility(isVisible) {
+                const style = qs('#foo2')
+                style.innerHTML = `
+                .player-timedtext-text-container {
                 display: ${isVisible ? 'block' : 'none'} !important;
-            }
-            `
-        },
-        setSubSize(pixels) {
-            const style = qs('#foo')
-            style.innerHTML = `
-            .player-timedtext-text-container span[style] {
-                font-size: ${pixels}px !important;
-            }
-            `
-        },
+                }
+                `
+            },
+            setSubSize(pixels) {
+                const style = qs('#foo')
+                style.innerHTML = `
+                .player-timedtext-text-container span[style] {
+                    font-size: ${pixels}px !important;
+                }
+                `
+            },
+        }
     }
-}
+})()
