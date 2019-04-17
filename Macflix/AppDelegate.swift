@@ -31,6 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         windowController.window = window
         window.contentView = RootView()
         window.minSize = Util.minWindowSize
+        window.collectionBehavior = .fullScreenPrimary
         
         window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = true
