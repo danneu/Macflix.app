@@ -103,7 +103,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBOutlet weak var hideOnHoverMenuItem: NSMenuItem!
+    
     @IBAction func toggleHideOnHover(_ sender: Any) {
+        let newAvoidance: Avoidance = windowController.avoidance == .off ? .ghost : .off
+        windowController.avoidance = newAvoidance
+        self.hideOnHoverMenuItem.state = newAvoidance == .ghost ? .on : .off
     }
     
     func onUrlChange(path: String) {
@@ -180,13 +184,11 @@ func jsCompletion(obj: Any?, err: Error?) {
 class DraggableWebView: WKWebView {
     var dragStart: Date? = nil
     
-    
     // This alone would be sufficient except that the final mouseUp
     // after a drag gets handled by the view instead of ignored,
     // so the user will accidentally click a button if they happened
     // to start (thus end) their drag on one.
     override var mouseDownCanMoveWindow: Bool {
-        //return self.isHidden
         return true
     }
     
@@ -220,13 +222,6 @@ class DraggableWebView: WKWebView {
                 return
             }
         }
-        
         super.mouseUp(with: event)
     }
-    
-//    open override func mouseEntered(with event: NSEvent) {
-//        
-//                print("[WebView] mouseEntered")
-//        NSApp.sendAction(#selector(WindowController.phaseOut), to: nil, from: nil)
-//    }
 }

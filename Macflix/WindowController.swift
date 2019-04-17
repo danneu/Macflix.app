@@ -2,6 +2,7 @@ import Cocoa
 import WebKit
 
 enum Avoidance {
+    case off
     case ghost
     //case teleport
 }
@@ -19,7 +20,8 @@ protocol Avoider {
 
 class WindowController: NSWindowController, NSWindowDelegate, Avoider {
 //    var avoidanceDelegate: AvoidanceDelegate?
-    var avoidance: Avoidance? = nil
+    var avoidance: Avoidance = .off
+    
     override var window: NSWindow? {
         didSet {
             // Whenever window is set, sync its always-on-top property
@@ -28,10 +30,8 @@ class WindowController: NSWindowController, NSWindowDelegate, Avoider {
         }
     }
     
-    
     @objc func phaseOut() {
         if (avoidance != .ghost) { return }
-        print("phaseOut")
         guard let window = window else { return }
         window.isOpaque = false
         window.backgroundColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.10)
@@ -43,7 +43,6 @@ class WindowController: NSWindowController, NSWindowDelegate, Avoider {
     
     @objc func phaseIn() {
         if (avoidance != .ghost) { return }
-        print("phaseIn")
         guard let window = window else { return }
         window.isOpaque = true
         window.backgroundColor = NSColor.windowBackgroundColor
@@ -65,14 +64,8 @@ class WindowController: NSWindowController, NSWindowDelegate, Avoider {
         }
     }
     
-    func windowWillStartLiveResize(_ notification: Notification) {
-        print("starting live resize")
-    }
-    
-    
     // When user manually resizes window, store the frame for next launch.
     func windowDidEndLiveResize(_ notification: Notification) {
-        print("did end live resize")
         guard let windowFrame = window?.frame,
             let screenFrame =  window?.screen?.frame else {
                 return
@@ -98,26 +91,32 @@ class WindowController: NSWindowController, NSWindowDelegate, Avoider {
     }
     
     @objc func alwaysTopChanged() {
-        print("updating ")
         if let window = window {
             window.level = Store.isAlwaysTop ? .floating : .normal
         }
     }
-    
 }
 
 class CatchallView: NSView {
+    // Note: Using NSApp.sendAction() didn't work because of, I believe,
+    // the responder chain not including the window when the app is not focused.
     override func mouseExited(with event: NSEvent) {
-//        print("[CatchAll] mouseExited")
-        NSApp.sendAction(#selector(WindowController.phaseIn), to: nil, from: nil)
+        (window?.windowController as? WindowController)?.phaseIn()
+    }
+    
+    override func mouseEntered(with event: NSEvent) {
+        (window?.windowController as? WindowController)?.phaseOut()
     }
     
     override func updateTrackingAreas() {
         for area in self.trackingAreas {
             self.removeTrackingArea(area)
         }
-        // let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .activeAlways]
-        let options: NSTrackingArea.Options = [.mouseEnteredAndExited, .activeAlways]
+        let options: NSTrackingArea.Options = [
+            .mouseEnteredAndExited,
+            .activeAlways,
+            .mouseMoved
+        ]
         let trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
         self.addTrackingArea(trackingArea)
     }

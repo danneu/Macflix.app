@@ -9,6 +9,15 @@ A simple macOS webview wrapper around netflix.com to add conveniences for watchi
 -   Always on top. The window never leaves your sight.
 -   Adjusts to each show's aspect ratio.
 -   Drag anywhere to move the window.
+-   Ghost mode. The window turns transparent on hover to stay out of your way.
+
+### Ghost mode
+
+If Macflix is getting in your way while watching a show, ghost mode will let you see through and click through the window during hover.
+
+`View -> Hide on hover`
+
+![ghost mode demo](https://i.imgur.com/cWCNyXC.gif)
 
 ## Why
 
