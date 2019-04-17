@@ -2,15 +2,28 @@ import Cocoa
 import WebKit
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-    var window: NSWindow!
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
+    var window: MainWindow!
     var webView: DraggableWebView!
     var windowController = WindowController()
+    
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        guard let action = menuItem.action else { return false }
+        switch action {
+        case #selector(AppDelegate.toggleAlwaysTop(_:)):
+            return true
+        case #selector(AppDelegate.toggleHideOnHover(_:)):
+            // Only enabled if not fullscreened.
+            return !window.styleMask.contains(.fullScreen)
+        default:
+            return false
+        }
+    }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let styleMask = NSWindow.StyleMask(arrayLiteral: [.titled, .closable, .resizable, .miniaturizable, .fullSizeContentView])
         let frame = Store.getWindowFrame()
-        window = NSWindow(contentRect: frame, styleMask: styleMask, backing: NSWindow.BackingStoreType.buffered, defer: true, screen: NSScreen.main)
+        window = MainWindow(contentRect: frame, styleMask: styleMask, backing: NSWindow.BackingStoreType.buffered, defer: true, screen: NSScreen.main)
         //window.setFrame(frame, display: true)
         window.windowController = windowController
         window.delegate = windowController
@@ -107,7 +120,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func toggleHideOnHover(_ sender: Any) {
         let newAvoidance: Avoidance = windowController.avoidance == .off ? .ghost : .off
         windowController.avoidance = newAvoidance
-        self.hideOnHoverMenuItem.state = newAvoidance == .ghost ? .on : .off
     }
     
     func onUrlChange(path: String) {

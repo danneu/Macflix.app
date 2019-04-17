@@ -20,7 +20,14 @@ protocol Avoider {
 
 class WindowController: NSWindowController, NSWindowDelegate, Avoider {
 //    var avoidanceDelegate: AvoidanceDelegate?
-    var avoidance: Avoidance = .off
+    var avoidance: Avoidance = .off {
+        didSet {
+            // Update AppDelegate menu state whenever avoidance is updated.
+            if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+                appDelegate.hideOnHoverMenuItem.state = self.avoidance == .ghost ? .on : .off
+            }
+        }
+    }
     
     override var window: NSWindow? {
         didSet {
