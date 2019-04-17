@@ -45,22 +45,8 @@ struct Store {
             common.set(newValue, forKey: "is_always_top")
             NSApp.sendAction(#selector(WindowController.alwaysTopChanged), to: nil, from: nil)
             NSApp.sendAction(#selector(AppDelegate.updateAlwaysTopMenuItem), to: nil, from: nil)
-
-
-//            NotificationCenter.default.post(name: .alwaysTopNotification, object: nil)
         }
     }
-//    static var isHideOnHover: Bool {
-//        get {
-//            return common.bool(forKey: "is_hide_on_hover")
-//        }
-//        set {
-//            common.set(newValue, forKey: "is_hide_on_hover")
-//            //  NSApp.sendAction(#selector(WindowController.alwaysTopChanged), to: nil, from: nil)
-//            
-//            //            NotificationCenter.default.post(name: .alwaysTopNotification, object: nil)
-//        }
-//    }
     
 }
 

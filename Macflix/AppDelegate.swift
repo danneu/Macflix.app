@@ -16,7 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             // Only enabled if not fullscreened.
             return !window.styleMask.contains(.fullScreen)
         default:
-            return false
+            // Enable the rest of our custom menuitems for now.
+            return true
         }
     }
 
@@ -28,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         window.windowController = windowController
         window.delegate = windowController
         windowController.window = window
-        window.contentView = CatchallView()
+        window.contentView = RootView()
         window.minSize = Util.minWindowSize
         
         window.titleVisibility = .hidden
@@ -193,6 +194,10 @@ func jsCompletion(obj: Any?, err: Error?) {
 
 // A view that you can drag to move the underlying window around,
 // but other mouse events are handled by the view.
+//
+// Really, it's the root view that should be draggable I think,
+// but making the webview (child view) draggable makes it easy
+// to disable the drag functionality by hiding the view (ghost mode) for now.
 class DraggableWebView: WKWebView {
     var dragStart: Date? = nil
     

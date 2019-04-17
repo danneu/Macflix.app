@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D916D22C2267870300132D3D /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D916D22B2267870300132D3D /* MainWindow.swift */; };
+		D916D2302267B9B900132D3D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D916D22F2267B9B900132D3D /* RootView.swift */; };
 		D9DE8724225A79A40020A582 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE8723225A79A40020A582 /* AppDelegate.swift */; };
 		D9DE8726225A79A60020A582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9DE8725225A79A60020A582 /* Assets.xcassets */; };
 		D9DE8729225A79A60020A582 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9DE8727225A79A60020A582 /* MainMenu.xib */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		D916D22B2267870300132D3D /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
+		D916D22F2267B9B900132D3D /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		D9DE8720225A79A40020A582 /* Macflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Macflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9DE8723225A79A40020A582 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9DE8725225A79A60020A582 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				D9DE8723225A79A40020A582 /* AppDelegate.swift */,
 				D9DE8731225A95490020A582 /* WindowController.swift */,
+				D916D22F2267B9B900132D3D /* RootView.swift */,
 				D916D22B2267870300132D3D /* MainWindow.swift */,
 				D9DE8735225A98EB0020A582 /* Store.swift */,
 				D9DE8739225AAB160020A582 /* Util.swift */,
@@ -153,6 +156,7 @@
 			files = (
 				D9DE8724225A79A40020A582 /* AppDelegate.swift in Sources */,
 				D9DE873A225AAB160020A582 /* Util.swift in Sources */,
+				D916D2302267B9B900132D3D /* RootView.swift in Sources */,
 				D916D22C2267870300132D3D /* MainWindow.swift in Sources */,
 				D9DE8732225A95490020A582 /* WindowController.swift in Sources */,
 				D9DE8736225A98EB0020A582 /* Store.swift in Sources */,
