@@ -41,17 +41,19 @@ class WindowController: NSWindowController, NSWindowDelegate, Avoider {
         if (avoidance != .ghost) { return }
         guard let window = window else { return }
         window.isOpaque = false
+        window.alphaValue = 0.3
         window.backgroundColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.10)
         window.hasShadow = false
         window.ignoresMouseEvents = true
         guard let webView = window.contentView?.subviews.first(where: { view in view is WKWebView }) else { return }
-        webView.isHidden = true
+        webView.isHidden = false
     }
     
     @objc func phaseIn() {
         if (avoidance != .ghost) { return }
         guard let window = window else { return }
         window.isOpaque = true
+        window.alphaValue = 1.0
         window.backgroundColor = NSColor.windowBackgroundColor
         window.hasShadow = true
         window.ignoresMouseEvents = false
