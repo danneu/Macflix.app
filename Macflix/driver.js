@@ -152,17 +152,31 @@
         document.head.appendChild(style2)
 
         // Handle fullscreen click
-        document.addEventListener(
-            'click',
-            (e) => {
-                if (e.target.classList.contains('button-nfplayerFullscreen')) {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    window.webkit.messageHandlers.requestFullscreen.postMessage(null)
-                }
-            },
-            true
-        )
+        //document.addEventListener(
+        //    'click',
+        //    (e) => {
+        //        if (e.target.classList.contains('button-nfplayerFullscreen')) {
+        //            e.preventDefault()
+        //            e.stopPropagation()
+        //            window.webkit.messageHandlers.requestFullscreen.postMessage(null)
+        //        }
+        //    },
+        //    true
+        //)
+        
+        // Fix Full screen mode key detection
+
+        HTMLDocument.prototype.fullscreenEnabled = true;
+
+        HTMLElement.prototype.requestFullscreen = function() {
+            window.webkit.messageHandlers.requestFullscreen.postMessage(null)
+            return new Promise(function(resolve) { resolve(); });
+        };
+
+        HTMLDocument.prototype.exitFullscreen = function() {
+            window.webkit.messageHandlers.requestFullscreen.postMessage(null)
+            return new Promise(function(resolve) { resolve(); });
+        };
 
         // DETECT URL CHANGE
 
